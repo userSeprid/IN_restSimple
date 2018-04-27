@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "LineObject" table = "LINEOBJECT">
+
+        <meta attribute = "class-description">
+            This class contains the LineObject detail.
+        </meta>
+
+        <id name = "lineID" type = "int" column = "LINEID">
+            <generator class="native"/>
+        </id>
+
+        <property name = "value" column = "first_name" type = "string"/>
+        <property name = "longestWord" column = "last_name" type = "string"/>
+        <property name = "shortestWord" column = "salary" type = "string"/>
+        <property name = "averageWordLength" column = "salary" type = "int"/>
+        <property name = "containerName" column = "salary" type = "string"/>
+
+    </class>
+</hibernate-mapping>
