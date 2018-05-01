@@ -21,26 +21,13 @@ public class LineServiceRestController {
         return this.lineObjectRepository.save(input);
     }
 
-
     @GetMapping(path = "/{lineID}/")
     Optional<LineObject> getLine(@PathVariable int lineID) {
         return this.lineObjectRepository.findById(lineID);
     }
 
-    @GetMapping(path = "/files/")
-    List<String> getProcessedFiles() {
-        //List<LineObject> objectList = lineObjectRepository.countDistinctByContainerNameOrderByContainerName();
-        //List<String> files = new ArrayList<>();
-        //for (LineObject object :
-       //         objectList) {
-        //    files.add(object.getContainerName());
-        //}
-        //return files;
-        return null;
-    }
-
     @GetMapping(path = "/files/{fileName}")
-    List<LineObject> getLinesOfSelectedFile(@PathVariable String fileName) {
+    Iterable<LineObject> getLinesOfSelectedFile(@PathVariable String fileName) {
         return lineObjectRepository.findByContainerName(fileName);
     }
 
@@ -50,17 +37,19 @@ public class LineServiceRestController {
     }
 
     @GetMapping(path = "files/allNames")
-    public @ResponseBody LineObject getFileNames() {
-        List<LineObject> objects = (List<LineObject>) lineObjectRepository.findAll();
-        LinkedHashSet hashSet;
+    public @ResponseBody Iterable<LineObject> getFileNames() {
         return lineObjectRepository.findDistinctTopByContainerNameNotNull();
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(path = "/files/hash")
-    public @ResponseBody HashMap<String, Iterable<String>> get() {
-        HashMap<String, Iterable<String>> map = new HashMap<>();
-
-        map.put("So", new ArrayList<>(Arrays.asList("Buenos Aires", "Córdoba", "La Plata")));
+    public @ResponseBody HashMap<String, Iterable<LineObject>> get() {
+        HashMap<String, Iterable<LineObject>> map = new HashMap<>();
+        Iterable<LineObject> fileNames = getFileNames();
+        for (LineObject object :
+                fileNames) {
+            map.put(object.getContainerName(), getLinesOfSelectedFile(object.getContainerName()));
+        }
         return map;
     }
 }

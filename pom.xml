@@ -19,6 +19,7 @@
     <modules>
         <module>rest</module>
         <module>model</module>
+        <module>basic</module>
     </modules>
 
     <properties>

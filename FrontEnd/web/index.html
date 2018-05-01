@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IN</title>.
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <style>
+        div {
+            border-style: groove;
+        }
+    </style>
+</head>
+<body>
+<div id="parent"></div>
+<script>
+   $(document).ready(function () {
+       $.getJSON("http://localhost:8080/files/hash", function (data) {
+           $.each(data, function(key, value){
+               $('#parent').append('<h2>' + key + '</h2>');
+               $.each(value, function (objKey, objValue) {
+                   var currentObjKey = objKey;
+                   $('#parent').append('<div id=' + currentObjKey + '></div>');
+                   $.each(objValue, function (subKey, subValue) {
+                       $('#' + currentObjKey).append('<h3>' + "   " + subKey + " : " + subValue + '</h3>')
+                   })
+               })
+           });
+       })
+   });
+</script>
+</body>
+</html>

@@ -1,3 +1,5 @@
+drop table line_object
+
 create table line_object
 (
   lineid              int auto_increment
